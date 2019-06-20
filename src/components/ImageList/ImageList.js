@@ -1,16 +1,15 @@
 import React from "react";
 import Image from "../Image/Image";
 
-const ImageList = ({ pictures, lastIndex }) => {
+function ImageList(props) {
+  const { pictures, lastIndex, picturesAmount } = props;
   return (
     <>
-      {pictures.map((id, index) => {
-        if (index >= lastIndex && index < lastIndex + 3) {
-          return <Image key={index} id={id} />;
-        }
-      })}
+      {pictures.slice(lastIndex, lastIndex + picturesAmount).map(id => (
+        <Image key={id} id={id} />
+      ))}
     </>
   );
-};
+}
 
 export default ImageList;

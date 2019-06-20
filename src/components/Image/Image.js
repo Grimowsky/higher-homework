@@ -1,11 +1,8 @@
 import React from "react";
 
-const Image = ({ id }) => {
-  return (
-    <div>
-      <img alt="" src={`http://source.unsplash.com/${id}`} />
-    </div>
-  );
-};
+function Image(props) {
+  const { id } = props;
+  return <img alt="" src={`http://source.unsplash.com/${id}`} />;
+}
 
 export default Image;
