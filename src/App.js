@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Image from "./components/Image/Image";
+import ImageList from "./components/ImageList/ImageList";
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      pictures: [],
+      lastIndex: 0
+    };
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  componentDidMount() {
+    fetch("https://picsum.photos/v2/list")
+      .then(response => response.json())
+      .then(data => this.setState({ pictures: data }));
+  }
+
+  loadNextPicture = () => {
+    this.setState({ lastIndex: this.state.lastIndex + 3 });
+  };
+
+  render() {
+    const extractedIDs = this.state.pictures.map((pic, i) => {
+      return pic.url.split(`photos/`)[1].split(`"`)[0];
+    });
+    return (
+      <div>
+        <div className="flex-container">
+          <ImageList pictures={extractedIDs} lastIndex={this.state.lastIndex} />
+        </div>
+        <button onClick={this.loadNextPicture}> Next </button>
+      </div>
+    );
+  }
 }
 
 export default App;
